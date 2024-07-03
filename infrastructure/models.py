@@ -1,14 +1,25 @@
 from django.db import models
 
 class Bed(models.Model):
-    bed_number = models.CharField(max_length=10)
-    is_occupied = models.BooleanField(default=False)
+    name = models.CharField(max_length=100)
+    type = models.CharField(max_length=100)  
+    status = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 class Medicine(models.Model):
     name = models.CharField(max_length=100)
-    quantity = models.IntegerField()
+    category = models.CharField(max_length=100)  
+    expiry_date = models.DateField()
+
+    def __str__(self):
+        return self.name
 
 class Equipment(models.Model):
     name = models.CharField(max_length=100)
-    quantity = models.IntegerField()
-    last_maintenance_date = models.DateField()
+    category = models.CharField(max_length=100)
+    status = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name

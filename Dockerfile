@@ -19,5 +19,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the Django project code into the container
 COPY . .
 
+ARG SERVICE_PORT
+ENV SERVICE_PORT=${SERVICE_PORT}
+
 # Start the Django development server
-CMD ["python", "manage.py", "runserver"]
+CMD ["sh", "-c", "python manage.py runserver 0.0.0.0:${SERVICE_PORT}"]

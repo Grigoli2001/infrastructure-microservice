@@ -22,6 +22,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:${RUN_SERVER_PORT}"
     ports:
       - "${SERVICE_PORT}:${RUN_SERVER_PORT}"
     volumes:
@@ -32,3 +33,10 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      test:
+        ["CMD", "curl", "-f", "http://localhost:${SERVICE_PORT}/infrastructure"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
